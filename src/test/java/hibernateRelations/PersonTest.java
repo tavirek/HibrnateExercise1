@@ -11,6 +11,8 @@ import javax.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,12 +55,12 @@ class PersonTest {
 
     }
 
-    @Test
-    public void personHaveAdress() {
-        List<Person> adressToPerson = personRepository.findAll();
-
-        System.out.println("result adress" + adressToPerson);
-    }
+//    @Test
+//    public void personHaveAdress() {
+//        List<Person> adressToPerson = personRepository.findAll();
+//
+//        System.out.println("result adress" + adressToPerson);
+//    }
 
 //    @Test
 //    public void should() {
@@ -70,9 +72,10 @@ class PersonTest {
 //
 //    }
 
-    @Test
-    public void shouldSavePersonAndAdress(){
 
+
+    @Test
+    public void shouldPersist() {
         //given
         Person person1 = new Person("Person1", "Kowalski", "11111111111", 20);
         Person person2 = new Person("Person2", "Kowalski", "22222222222", 30);
@@ -90,21 +93,20 @@ class PersonTest {
         Optional<Person> byId = personRepository.findById(savedPerson1.getId());
         Optional<Adress> byId1 = adressRepository.findById(savedAdres1.getId());
 
-        // when
-        if(byId.isPresent() && byId1.isPresent()) {
-            Person person = byId.get();
-            Adress adress = byId1.get();
-            person.setAdress(adress);
-            adress.setPerson(person);
-            personRepository.save(person);
-        }
+        //when
+        adress1.setPersons(Stream.of(person1, person2).collect(Collectors.toSet()));
+        adress2.setPersons(Stream.of(person1, person2).collect(Collectors.toSet()));
+        adressRepository.save(adress1);
+        adressRepository.save(adress2);
 
         //then
-        List<Person> all = personRepository.findAll();
-        System.out.println("result person: " + all);
+        List<Adress> allAdress = adressRepository.findAll();
+        List<Person> allPersons = personRepository.findAll();
+        System.out.println("result: " + allAdress);
+        System.out.println("authors: " + allPersons);
 
+        assertThat(allAdress).isNotEmpty();
+        assertThat(allPersons).isNotEmpty();
     }
-
-
 
 }

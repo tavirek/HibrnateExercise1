@@ -1,6 +1,8 @@
 package hibernateRelations;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Adress {
@@ -12,8 +14,8 @@ public class Adress {
     private String streetName;
     private Integer houseNr;
     private String postalCode;
-    @OneToOne ( fetch = FetchType.LAZY)
-    private Person person;
+    @ManyToMany ( fetch = FetchType.LAZY)
+     Set<Person> persons = new HashSet<>();
 
 
     public Adress(String city, String streetName, Integer houseNr, String postalCode) {
@@ -69,12 +71,12 @@ public class Adress {
         this.postalCode = postalCode;
     }
 
-    public Person getPerson() {
-        return person;
+    public Set<Person> getPersons() {
+        return persons;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPersons(Set<Person> persons) {
+        this.persons = persons;
     }
 
     @Override

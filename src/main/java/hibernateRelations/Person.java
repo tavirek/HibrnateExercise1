@@ -1,6 +1,8 @@
 package hibernateRelations;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Person {
@@ -12,8 +14,8 @@ public class Person {
     private String lastname;
     private String pesel;
     private Integer age;
-    @OneToOne ( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Adress adress;
+    @ManyToMany ( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    Set<Adress> adress = new HashSet<>();
 
     public Person(String firstname, String lastname, String pesel, Integer age) {
         this.firstname = firstname;
@@ -67,11 +69,11 @@ public class Person {
         this.age = age;
     }
 
-    public Adress getAdress() {
+    public Set<Adress> getAdress() {
         return adress;
     }
 
-    public void setAdress(Adress adress) {
+    public void setAdress(Set<Adress> adress) {
         this.adress = adress;
     }
 
