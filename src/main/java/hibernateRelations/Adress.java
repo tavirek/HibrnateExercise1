@@ -1,6 +1,8 @@
 package hibernateRelations;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Adress {
@@ -12,13 +14,16 @@ public class Adress {
     private String streetName;
     private Integer houseNr;
     private String postalCode;
+    @OneToMany
+    private List<Person> persons = new ArrayList<>();
 
 
-    public Adress(String city, String streetName, Integer houseNr, String postalCode) {
+    public Adress(String city, String streetName, Integer houseNr, String postalCode, List persons) {
         this.city = city;
         this.streetName = streetName;
         this.houseNr = houseNr;
         this.postalCode = postalCode;
+        this.persons = persons;
 
     }
 
@@ -74,6 +79,7 @@ public class Adress {
                 ", streetName='" + streetName + '\'' +
                 ", houseNr=" + houseNr +
                 ", postalCode='" + postalCode + '\'' +
+                ", persons=" + persons +
                 '}';
     }
 }

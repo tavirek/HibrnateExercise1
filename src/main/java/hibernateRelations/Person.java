@@ -12,15 +12,14 @@ public class Person {
     private String lastname;
     private String pesel;
     private Integer age;
-    @OneToOne
-    private Adress adress;
 
-    public Person(String firstname, String lastname, String pesel, Integer age, Adress adress) {
+
+    public Person(String firstname, String lastname, String pesel, Integer age) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.pesel = pesel;
         this.age = age;
-        this.adress = adress;
+
     }
 
     public Person(){
@@ -67,13 +66,7 @@ public class Person {
         this.age = age;
     }
 
-    public Adress getAdress() {
-        return adress;
-    }
 
-    public void setAdress(Adress adress) {
-        this.adress = adress;
-    }
 
     @Override
     public String toString() {
@@ -83,7 +76,6 @@ public class Person {
                 ", lastname='" + lastname + '\'' +
                 ", pesel='" + pesel + '\'' +
                 ", age=" + age +
-                ", adress=" + adress +
                 '}';
     }
 }
