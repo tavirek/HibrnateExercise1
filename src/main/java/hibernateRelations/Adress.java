@@ -12,15 +12,14 @@ public class Adress {
     private String streetName;
     private Integer houseNr;
     private String postalCode;
-    @ManyToOne
-    private Person person;
 
-    public Adress(String city, String streetName, Integer houseNr, String postalCode, Person person) {
+
+    public Adress(String city, String streetName, Integer houseNr, String postalCode) {
         this.city = city;
         this.streetName = streetName;
         this.houseNr = houseNr;
         this.postalCode = postalCode;
-        this.person = person;
+
     }
 
     public Adress(){
