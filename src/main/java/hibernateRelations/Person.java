@@ -12,15 +12,15 @@ public class Person {
     private String lastname;
     private String pesel;
     private Integer age;
-    @OneToOne
+    @OneToOne ( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Adress adress;
 
-    public Person(String firstname, String lastname, String pesel, Integer age, Adress adress) {
+    public Person(String firstname, String lastname, String pesel, Integer age) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.pesel = pesel;
         this.age = age;
-        this.adress = adress;
+
     }
 
     public Person(){
@@ -83,7 +83,7 @@ public class Person {
                 ", lastname='" + lastname + '\'' +
                 ", pesel='" + pesel + '\'' +
                 ", age=" + age +
-                ", adress=" + adress +
+
                 '}';
     }
 }

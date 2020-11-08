@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.transaction.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,11 +39,11 @@ class PersonTest {
         adressRepository.save(adress4);
 
 
-        Person person1 = new Person("Person1", "Kowalski", "11111111111", 20, adress1);
-        Person person2 = new Person("Person2", "Kowalski", "22222222222", 30, adress2);
-        Person person3 = new Person("Person3", "Kowalski", "33333333333", 40, adress3);
-        Person person4 = new Person("Person4", "Kowalski", "44444444444", 50, adress4);
-        Person person5 = new Person("Person5", "Kowalski", "55555555555", 60, adress4);
+        Person person1 = new Person("Person1", "Kowalski", "11111111111", 20 );
+        Person person2 = new Person("Person2", "Kowalski", "22222222222", 30);
+        Person person3 = new Person("Person3", "Kowalski", "33333333333", 40);
+        Person person4 = new Person("Person4", "Kowalski", "44444444444", 50);
+        Person person5 = new Person("Person5", "Kowalski", "55555555555", 60);
         personRepository.save(person1);
         personRepository.save(person2);
         personRepository.save(person3);
@@ -59,14 +60,51 @@ class PersonTest {
         System.out.println("result adress" + adressToPerson);
     }
 
-    @Test
-    public void should() {
+//    @Test
+//    public void should() {
+//
+//        //when
+//        List<Person> persons = personRepository.findAll();
+//        //then
+//        persons.forEach(person -> assertThat(person.getAdress()).isNotNull());
+//
+//    }
 
-        //when
-        List<Person> persons = personRepository.findAll();
+    @Test
+    public void shouldSavePersonAndAdress(){
+
+        //given
+        Person person1 = new Person("Person1", "Kowalski", "11111111111", 20);
+        Person person2 = new Person("Person2", "Kowalski", "22222222222", 30);
+
+        Adress adress1 = new Adress("Katowice", "Twarda", 5, "40-123");
+        Adress adress2 = new Adress("Katowice", "Miekka", 15, "40-123");
+
+        Person savedPerson1 = personRepository.save(person1);
+        Person savedPerson2 = personRepository.save(person2);
+
+        Adress savedAdres1 = adressRepository.save(adress1);
+        Adress savedAdres2 = adressRepository.save(adress2);
+
+
+        Optional<Person> byId = personRepository.findById(savedPerson1.getId());
+        Optional<Adress> byId1 = adressRepository.findById(savedAdres1.getId());
+
+        // when
+        if(byId.isPresent() && byId1.isPresent()) {
+            Person person = byId.get();
+            Adress adress = byId1.get();
+            person.setAdress(adress);
+            adress.setPerson(person);
+            personRepository.save(person);
+        }
+
         //then
-        persons.forEach(person -> assertThat(person.getAdress()).isNotNull());
+        List<Person> all = personRepository.findAll();
+        System.out.println("result person: " + all);
 
     }
+
+
 
 }

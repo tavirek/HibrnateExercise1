@@ -12,6 +12,8 @@ public class Adress {
     private String streetName;
     private Integer houseNr;
     private String postalCode;
+    @OneToOne ( fetch = FetchType.LAZY)
+    private Person person;
 
 
     public Adress(String city, String streetName, Integer houseNr, String postalCode) {
@@ -19,6 +21,7 @@ public class Adress {
         this.streetName = streetName;
         this.houseNr = houseNr;
         this.postalCode = postalCode;
+
 
     }
 
@@ -66,6 +69,14 @@ public class Adress {
         this.postalCode = postalCode;
     }
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
     @Override
     public String toString() {
         return "Adress{" +
@@ -76,4 +87,6 @@ public class Adress {
                 ", postalCode='" + postalCode + '\'' +
                 '}';
     }
+
+
 }
